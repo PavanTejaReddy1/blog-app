@@ -6,8 +6,8 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="bg-gray-50">
 
-        <Header className="z-50"/>
-    
+        <Header className="fixed z-50"/>
+
         <main className="pt-2">
           {children}
         </main>

@@ -9,6 +9,17 @@ export default async function Home({ searchParams }) {
 
   const blogs = await getBlogs(page);
 
+  if (!blogs.length) {
+    return (
+      <main className="text-center mt-20">
+        <h2 className="text-xl font-semibold">Blogs unavailable</h2>
+        <p className="text-gray-500">
+          Unable to fetch data from external API.
+        </p>
+      </main>
+    );
+  }
+
   return (
     <>
       <div className="max-w-6xl mx-auto px-6 py-10">
