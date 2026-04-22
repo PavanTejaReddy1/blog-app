@@ -9,6 +9,7 @@ export default function BlogPage() {
     const id = Number(p.id);
 
     const [blog, setBlog] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     async function fetchBlog() {
         try {
@@ -26,12 +27,18 @@ export default function BlogPage() {
         } catch (error) {
             console.error(error);
             setBlog(null);
+        } finally {
+            setLoading(false);
         }
-    };
+    }
 
     useEffect(() => {
         fetchBlog();
     }, [id]);
+
+    if (loading) {
+        return <h1 className="text-center mt-10">Loading...</h1>;
+    }
 
     if (!blog) {
         return <h1 className="text-center mt-10">Blog not found</h1>;
