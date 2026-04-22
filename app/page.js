@@ -9,7 +9,7 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  const fetchBlogs = async () => {
+  async function fetchBlogs() {
     try {
       setLoading(true);
 
@@ -61,7 +61,7 @@ export default function Home() {
           <Link key={blog.id} href={`/blog/${blog.id}`}>
             <div className="relative rounded-xl overflow-hidden group cursor-pointer transition hover:scale-105 hover:shadow-xl">
 
-              <img src={blog.photo_url} alt={blog.title} className="w-full h-56 object-cover group-hover:scale-110 transition"/>
+              <img src={blog.photo_url} alt={blog.title} className="w-full h-56 object-cover group-hover:scale-110 transition" />
 
               <div className="absolute inset-0 bg-black/40 flex items-end p-4">
                 <h3 className="text-white font-bold text-lg">

@@ -1,10 +1,37 @@
-import { getBlogById } from "@/lib/api";
+"use client";
 
-export default async function BlogPage({ params }) {
-    const p = await params;
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+
+export default function BlogPage() {
+    const p = useParams();
     const id = Number(p.id);
 
-    const blog = await getBlogById(id);
+    const [blog, setBlog] = useState(null);
+
+    async function fetchBlog() {
+        try {
+            const res = await fetch(
+                "https://api.slingacademy.com/v1/sample-data/blog-posts"
+            );
+
+            const data = await res.json();
+
+            const found = data.blogs.find(
+                (b) => Number(b.id) === id
+            );
+
+            setBlog(found);
+        } catch (error) {
+            console.error(error);
+            setBlog(null);
+        }
+    };
+
+    useEffect(() => {
+        fetchBlog();
+    }, [id]);
 
     if (!blog) {
         return <h1 className="text-center mt-10">Blog not found</h1>;
@@ -13,11 +40,11 @@ export default async function BlogPage({ params }) {
     return (
         <main className="max-w-3xl mx-auto px-4 py-10">
 
-            <a href="/" className="inline-flex items-center gap-2 px-4 py-2 mb-6 text-blue-600 border border-blue-200 rounded-lg transition-all duration-300 hover:bg-blue-600 hover:text-white hover:shadow-md">
+            <Link href="/" className="inline-flex items-center gap-2 px-4 py-2 mb-6 text-blue-600 border border-blue-200 rounded-lg transition-all duration-300 hover:bg-blue-600 hover:text-white hover:shadow-md">
                 ← Back
-            </a>
+            </Link>
 
-            <img src={blog.photo_url} alt={blog.title} className="w-full h-64 object-cover rounded mb-6"/>
+            <img src={blog.photo_url} alt={blog.title} className="w-full h-64 object-cover rounded mb-6" />
 
             <h1 className="text-3xl font-bold mb-4">{blog.title}</h1>
 
